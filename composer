@@ -5,7 +5,7 @@
 2.QList:
     Q1:composer实现过程
     Q2:composer使用过程
-    Q3:如何更新映射以及为什么要更新映射映射带来的好处是什么？
+    Q3:如何更新映射以及为什么要更新映射,映射带来的好处是什么？
     
 3 Q1:composer的实现过程
      一般composer包存储在php框架的vender目录下
@@ -18,7 +18,7 @@
       autoload_statis.php         composer的代码组织规则 
       classLoader.php             注入前的准备工作，将所有的自动加载文件分类，放入数组中，准备注入
       
-      到此处，就是所有文件的自动加载
+      到此，就是所有文件的自动加载
       
    Q2：composer的使用过程
       1》require_once __DIR__ . '/composer/autoload_real.php'; 引入这一行，就可以使用了
