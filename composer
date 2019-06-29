@@ -1,0 +1,34 @@
+1.众所周知 composer 是现代 PHP 项目的基石， 与古老的 pear 不同， composer 并不是一款专注于系统级别 php 管理的包管理系统，而是基于项目的一个
+  库管理系统。这就好比 npm install -g 和 npm install 的区别。而且最主要的是 pear 不太能跟上时代的潮流，在大家都在用 psr-* 的时候 pear 依然
+  我行我素自成一体。
+  
+2.QList:
+    Q1:composer实现过程
+    Q2:composer使用过程
+    Q3:如何更新映射以及为什么要更新映射映射带来的好处是什么？
+    
+3 Q1:composer的实现过程
+     一般composer包存储在php框架的vender目录下
+     目录结构是：                   自动加载机制
+      autoload_classmap.php       classmap自动加载
+      autoload_file.php           files自动加载
+      autoload_namespace.php      
+      autoload_psr4.php           psr4自动加载
+      autoload_real.php           将产生的类信息数组注入(spl_autoload_register)
+      autoload_statis.php         composer的代码组织规则 
+      classLoader.php             注入前的准备工作，将所有的自动加载文件分类，放入数组中，准备注入
+      
+      到此处，就是所有文件的自动加载
+      
+   Q2：composer的使用过程
+      1》require_once __DIR__ . '/composer/autoload_real.php'; 引入这一行，就可以使用了
+      2》项目使用经验：
+        composer dump-autoload -o   执行这个指令，用于更新composer的文件，是一种以空间换时间的思想
+   
+   Q3:如何更新映射，映射带来的好处。
+      减少io,加快加载速度。Compsoer\ClassLoader 会优先查看 autoload_classmap 中所有生成的注册类。如果在classmap 中没有发现再 fallback 到
+      psr-4 然后 psr-0，所以当打了 composer dump-autoload -o 之后，composer 就会提前加载需要的类并提前返回。这样大大减少了 IO 和深层次的loop。
+      
+ Thanks,over!
+      
+      
