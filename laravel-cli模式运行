@@ -1,0 +1,25 @@
+Q1：在cli模式下运行laravel框架
+
+  action1:
+    想要借助laravel框架执行一些耗时操作，可以选择在cli模式下，因为不会有超时，但是laravel并没有天生支持cli模式，那就需要简单进行一下改造，打开
+    laravel框架下的server.php,
+       
+    $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+       
+    uri的产生是需要接受一个web请求参数的，REQUEST_URI，这里我们可以直接替换成可以在web模式下访问的uri，例如这样：
+    $_SERVER['REQUEST_URI'] = "api/user";
+    执行，php server.php发现程序正常执行！
+    
+ action2:
+    warning:问题，一般的并令行都是支持传参数的，这样可以提高代码的灵活性和扩展性，显然上面的实现不符合规范
+    
+    添加如下代码，使php接受命令行参数 uri,并且替换上面写死的代码：$_SERVER['REQUEST_URI'] = "api/user"
+    if(isset($argv[1] && is_string($argv[1]))){
+      $_SERVER['REQUEST_URI'] = $argv[1];
+    } else {
+      die('参数不足!');
+    }
+    
+    执行，php server.php api/user,程序正常执行!
+    
+ thanks,Over!
