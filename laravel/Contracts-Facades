@@ -1,0 +1,100 @@
+1.契约和门面的使用经验总结：
+
+  1.1  契约实现优势：明确的依赖关系，清晰的实现方法集，弊端是：必须在参数函数参数位置注入或者通过construct方法注入，不够灵活
+  1.2  门面实现优势：注入语法简单，是对底层容器类的静态代理；弊端：实现的方法集不够明确
+  
+2.简单实现：
+  契约实现：
+    步骤1：声明契约，在契约中规定服务实现的方法，尽量保证职责单一
+    <?php
+      namespace App\Contracts;
+
+      interface CreateOrder
+      {
+          /**
+          *  创建订单方法
+          *
+          * @param $order_type
+          * @param $products_type
+          * @return mixed
+          */
+          public function create($order_type, $products_type, $customer_id, $start_month);
+      }
+      ?>
+      
+    步骤2：编写契约的具体实现类
+    <?php
+    namespace App\Services\Contracts;
+
+    use App\Contracts\CreateOrder;
+
+    class CreateOrderService implements CreateOrder
+    {
+        /**
+         * @param $order_type
+         * @param $products_type
+         * @return mixed|void
+         */
+        public function create($order_type = null, $products_type = null, $customer_id = null, $start_month = null)
+        {
+            return '按照契约实现订单服务!';
+        }
+    }
+    ?>
+    
+    步骤3：
+    绑定接口到实现，实现方式有两种，只是简单的绑定的话，直接在AppServiceProvider中的register方法中进行绑定
+    $this->app->singleton(CreateOrder::class, function ($app) {
+        return new CreateOrderService();
+    });
+    或者自己通过命令 php artisan make:provider providerName 自定义一个服务提供者，并同时添加到config/app.php中的providers数组中
+    
+    步骤4：测试
+    在任意控制器中，在方法的参数注入服务（App\Contracts\CreateOrder $createOrder）,可以直接使用
+    
+    
+ 门面实现：
+    步骤1：创建新的门面
+    <?php
+    namespace App\Facades;
+    
+    use Illuminate\Support\Facades\Facade;
+    class CreateOrder extends Facade
+    {
+        /**
+         * 获取组件的注册名称。
+         *
+         * @return string
+         */
+        protected static function getFacadeAccessor() { return 'CreateOrderService'; }
+    }
+    
+    步骤2：编写门面的真正实现类
+    <?php
+    namespace App\Services\Facades;
+    
+    class CreateOrderService
+    {
+        /**
+         * @param $order_type
+         * @param $products_type
+         * @param $customer_id
+         * @param $start_month
+         */
+        public function create($order_type = null, $products_type = null, $customer_id = null, $start_month = null)
+        {
+            return '使用门面形式，创建订单!';
+        }
+    }
+    ?>
+    
+    步骤3：在服务提供者将门面别名与实现类绑定，同样在register方法中添加如下代码：
+    $this->app->singleton('CreateOrderService', function ($app) {
+        return new FacadesCreateOrderService();
+    });
+    
+    步骤4：测试
+    在任意控制器中，直接使用门面
+    CreateOrder::create();
+    
+Bingo!Thanks!
