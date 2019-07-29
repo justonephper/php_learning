@@ -1,0 +1,26 @@
+PHP自动加载上——spl_autoload_register
+
+自动加载实现：
+
+class Cache{
+  #注：1.方法必须为public,2.必须为static
+  public static function default_method($classname){
+    echo 'just one test!';
+    //常规操作是引入文件路径
+    require_once ($classname);
+  }
+}
+
+$class = 'classTest';
+
+if(class_exists($class)){
+  $class_con = new $class();
+} else {
+  throw new \Exception("加载的类不存在!");
+}
+
+//分析:
+class_exists()方法，args_1:类名，args_2:使用检测自动加载队列
+function class_exists ($class_name, $autoload = true) {}
+    执行class_exists()方法时，会触发类有效性检测，在当前进程空间内在类的列表中查找的当前类，如果查找到直接返回结果，如果没有查到，根据args_2设置决定
+是否查找自动加载列表，默认会检测自动加载列表，这时会命中我们注册的spl_autoload_register函数，执行处理逻辑，一般是类文件路径处理后执行require_once
