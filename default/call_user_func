@@ -1,0 +1,28 @@
+1.调用call_user_func
+
+  eg:面向过程方式
+      function test(){
+        echo '被调用了';
+      }
+      
+      call_user_func('test');
+      output:
+      被调用了
+      
+  eg:面向对象方式
+      call_user_func(array('class_name','func_name'),'args');
+      
+      class order{
+        //注意：必须为public，必须为static
+        public static function create($params){  
+          echo $params;
+        }
+      }
+      //使用
+      call_user_func(array('order','create'),'SS20190719121102');
+      
+      output:
+      SS20190719121102
+      
+      
+ over!
