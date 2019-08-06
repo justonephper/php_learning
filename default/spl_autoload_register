@@ -1,5 +1,45 @@
 PHP自动加载上——spl_autoload_register
 
+自动加载前提：
+class test
+{
+  public static function hook1( $class )
+  {
+    echo 'hook1-'.$class;
+  }
+  
+  public statis function hook2( $class )
+  {
+    echo 'hook2-'.$class;
+  }
+}
+
+class load
+{
+  public static function load1( $class )
+  {
+    echo 'load1-'.$class;
+  }
+  
+  public static function load2( $class )
+  {
+    echo 'load2-'.$class;die;
+  }
+}
+
+spl_autoload_register(['test','hook1']);
+spl_autoload_register(['test','hook2']);
+spl_autoload_register(['test','hook3']);
+
+spl_autoload_register(['load','load1']);
+spl_autoload_register(['load','load2']);
+spl_autoload_register(['load','load3']);
+//注册自动加载列表
+
+new order();
+//实例化不存在的类或者检测类存在时，会遍历自动加载列表，执行自动加载列表逻辑，直到不存在的类文件被引入，截止遍历
+
+
 自动加载实现：
 
 class Cache{
