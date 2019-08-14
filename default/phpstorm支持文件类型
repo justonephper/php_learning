@@ -1,0 +1,16 @@
+Q:今天在phpstorm中编辑 .env文件，打不开，需要设置一下系统能够支持的文件类型？
+
+步骤：
+    1.目录：setting/Editor/File Types
+    
+    2.在Recognized File Types添加 .env
+    
+    3.添加样板，Register Patterns
+    
+    4.点击apply,点击ok!
+    
+    再次打开.env文件，打开成功!
+    
+    
+    
+    
