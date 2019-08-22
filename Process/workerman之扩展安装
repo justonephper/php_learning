@@ -1,0 +1,13 @@
+1.安装workerMan,只是想学习一下进程管理的知识。
+
+扩展支持：
+  pcntl,posix,libevent
+
+  本机环境，php7.2.7,安装libevent扩展并且需要libevent库支持
+  libevent支持php(5.3~6)，之间，event支持php7以上，所以只能安装event扩展
+  
+  event扩展依赖socket扩展，需要一并安装，然后在php.ini中添加
+  extension=sockets.so
+  extension=event.so
+  
+重新执行php -m ，发现存在event扩展和sockets扩展
