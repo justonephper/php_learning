@@ -15,7 +15,7 @@
     }
     
 ２．进程间数据隔离
-    if(false) {
+    if(ｔｒｕｅ) {
         $num = 1;
         $pid = pcntl_fork();
         if($pid < 0){
@@ -57,5 +57,39 @@
             cli_set_process_title('father-process');
             echo 'father-process:'.cli_get_process_title();
             sleep(30);
+        }
+    }
+
+５．错误的ｆｏｒｋ行为
+  父进程和子进程将继续执行fork之后的程序代码(包含pcntl_fork函数)。
+    if(true){
+    for( $i = 1; $i <= 3 ; $i++ ){
+        $pid = pcntl_fork();
+        if( $pid > 0 ){
+            // do nothing ...
+        } else if( 0 == $pid ){
+            echo "儿子".PHP_EOL;
+            //exit();这个函数一定不能丢
+        }
+    }
+}
+        
+６．孤儿进程的产生（父进程很快执行完成后退出，子进程还在运行，子进程会变成孤儿进程）
+     if(ｔｒｕｅ){
+        $pid = pcntl_fork();
+        if($pid < 0){
+            die('fork failed.');
+        } elseif ($pid == 0){
+            echo '子进程在执行';
+            $i = 0;
+            while ($i < 9){
+                echo 'father-pid:'.posix_getppid().PHP_EOL;
+                sleep(1);
+                $i++;
+            }
+            die;
+        } else{
+            sleep(3);
+            die;
         }
     }
