@@ -93,3 +93,20 @@
             die;
         }
     }
+        
+7.僵尸进程的产生（子进程执行结束后，子进程没有别及时的回收，产生子进程变成僵尸进程，直到父进程结束）
+    if(true){
+        $pid = pcntl_fork();
+        if( $pid > 0 ){
+            // 下面这个函数可以更改php进程的名称
+            cli_set_process_title('php father process');
+            // 让主进程休息60秒钟
+            sleep(15);
+        } else if( 0 == $pid ) {
+            cli_set_process_title('php child process');
+            // 让子进程休息10秒钟，但是进程结束后，父进程不对子进程做任何处理工作，这样这个子进程就会变成僵尸进程
+            sleep(10);
+        } else {
+            exit('fork error.'.PHP_EOL);
+        }
+    }
