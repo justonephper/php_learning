@@ -110,3 +110,60 @@
             exit('fork error.'.PHP_EOL);
         }
     }
+
+        
+８．进程回收 使用pcntl_wait()阻塞回收;
+if(true){
+    $pid = pcntl_fork();
+    if($pid < 0){
+        die('fork failed.');
+    } elseif ($pid > 0){
+        cli_set_process_title('php father process');
+        // 返回$wait_result，就是子进程的进程号，如果子进程已经是僵尸进程则为0
+        $wait_result = pcntl_wait( $status );
+        print_r($status);
+        
+    } else {
+        cli_set_process_title('php son process');
+        sleep(5);
+    }
+
+９．回收进程，非阻塞方式　pcntl_waitpid();
+if(false){
+    $pid = pcntl_fork();
+    if($pid < 0){
+        die('fork failed.');
+    } elseif ($pid > 0){
+        $i = 0;
+        while ($i < 10){
+            pcntl_waitpid($pid, $status, WNOHANG);
+            var_dump($status);
+            sleep(1);
+            $i++;
+        }
+    } else {
+        sleep(5);
+    }
+}
+
+１０．使用信号回收
+if(true){
+    $pid = pcntl_fork();
+    if($pid < 0){
+        die('fork failed.');
+    }elseif ($pid > 0) {
+        //安装信号处理器
+        pcntl_signal(SIGCHLD, function ()use($pid){
+            echo '子进程退出'.PHP_EOL;
+            pcntl_waitpid($pid, $status, WNOHANG);
+            exit();
+        });
+
+        while (true){
+            sleep(1);
+            pcntl_signal_dispatch();
+        }
+    } else {
+        sleep(5);
+    }
+}
