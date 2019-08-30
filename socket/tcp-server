@@ -1,0 +1,20 @@
+创建一个ｔｃｐ服务器：
+  $host = '127.0.0.1';
+  $port = '9999';
+  $listen_server = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+  socket_set_option($listen_socket, SOL_SOCKET, SO_REUSEADDR, 1);   //停服后，立即释放监听socket
+  ｓｏｃｋet_bind($listen_addr, $host, $port);
+  socket_listen($listen_socket);
+  
+  while(true){
+      //阻塞监听ｃｌｉｅｎｔ请求
+      $conn_socket = ｓｏｃｋｅｔ_accept($listen_socket);
+      $msg = "ｈｅｌｌｏ client\r\n";
+      ｓｏｃket_write($conn_socket, $msg, strlen($msg));
+      socket_close($conn_socket);
+  }
+  
+  保存为，ｔｃｐ-server.php,然后启用ｔｅｌnet客户端
+  
+  ｔｅｌnet 127.0.0.1 9999   //注意，这里地址不要写成ｉｐ:port,会
+  提示：telnet: could not resolve 127.0.0.1:9999/telnet: Name or service not known
