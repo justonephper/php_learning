@@ -1,0 +1,15 @@
+Question1 Desc:
+  In ProviderRepository.php line 208:
+      Class 'SwooleTW\Http\LaravelServiceProvider' not found 
+      
+操作步骤：
+  手动删除一个扩展包之后，想更新一下composer缓存，composer dump-autoload,一直提示这个错误！
+  然后又手动删除，composer.lock文件中的扩展包信息，执行composer dump-autoload还是提示提示找不到这个包。
+  
+  最后，执行了一次这个，composer install,然后composer的缓存更新，达到目的，但是不知道原因！
+  
+Question2 Desc:
+  删除扩展包 barryvdh/laravel-cors
+  使用composer remove barryvdh/laravel-cors,能够删除扩展包和依赖包，并同时更新composer.lock文件
+  但是一直提示，class not found!
+  打开框架中，config/app.php文件，搜索这个扩展包是不是还在被引入，删除即可！

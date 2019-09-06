@@ -1,9 +1,0 @@
-Ｑｕｅｓｔｉｏｎ Desc:
-  In ProviderRepository.php line 208:
-      Class 'SwooleTW\Http\LaravelServiceProvider' not found 
-      
-操作步骤：
-  手动删除一个扩展包之后，想更新一下ｃｏｍｐｏｓｅｒ缓存，ｃｏｍｐｏｓｅｒ dump-autoload,一直提示这个错误！
-  然后又手动删除，ｃｏｍｐｏｓｅｒ.lock文件中的扩展包信息，执行ｃｏｍｐｏｓｅｒ dump-autoload还是提示提示找不到这个包。
-  
-  最后，执行了一次这个，ｃｏｍｐｏｓｅｒ install,然后composer的缓存更新，达到目的，但是不知道原因！
