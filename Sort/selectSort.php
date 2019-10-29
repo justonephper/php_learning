@@ -1,32 +1,26 @@
-//选择排序
-方法描述：首先创建一个空数组，然后从数组中取出最小的数据，依次放入新数组，直到旧数组数据被全部取出
-
-function findMin($arr)
-{
-    $len = count($arr);
-    if($len <= 1){
-        return 0;
-    }
-    $min = 0;
-    for($i = 0; $i < $len; $i++){
-        if($arr[$min] > $arr[$i]){
-            $min = $i;
-        }
-    }
-    return $min;
-}
+//选择排序  从第二个数开始，选出最小的数和当前数作比较
 
 function selectSort($arr)
 {
     $len = count($arr);
-    $new_arr = [];
-    for($i = 0; $i < $len; $i++){
-        $key = findMin($arr);
-        $new_arr[] = $arr[$key];
-        unset($arr[$key]);
-        $arr = array_merge($arr, array());
+    if ($len <= 1) {
+        return $arr;
     }
-    return $new_arr;
+    for ($i = 0; $i < $len - 1; $i++) {
+        //取出第二个数后的最小值
+        $min = $i;
+        for ($j = $i+1;$j < $len;$j++){
+            if($arr[$j] < $arr[$min]){
+                $min = $j;
+            }
+        }
+        if($min != $i){
+            $temp = $arr[$min];
+            $arr[$min] = $arr[$i];
+            $arr[$i] = $temp;
+        }
+    }
+    return $arr;
 }
 
 $arr = [2, 3, 6, 5, 4, 1, 9, 7, 8];
