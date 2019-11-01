@@ -1,0 +1,34 @@
+1.安装Yii2.0框架
+  选择归档文件方式安装，因为composer安装的时候，一次性安装的插件总是超过composer的最大限制
+  
+２.选择advanced版本，这个自带多应用
+
+３.安装
+  composer global require "fxp/composer-asset-plugin:^1.3.1"
+  composer create-project yiisoft/yii2-app-advanced advanced 2.0.12
+  cd advanced
+  php init
+
+４.首先配置数据库，然后生成迁移文件
+运行迁移之前，我们先把数据库配置一番，打开 common\config\main-local.php 文件，我们看到 components 下面的db配置，参考如下配置就好
+  'components' => [
+    'db' => [
+        'class' => 'yii\db\Connection',
+        // 修改host 和dbname 之前需要手动创建了dbname才可以
+        'dsn' => 'mysql:host=localhost;dbname=advanced',
+        //登录数据库的账号
+        'username' => 'root',
+        //登录数据库的密码
+        'password' => '',
+        'charset' => 'utf8',
+    ],
+    // other code
+  ],
+
+  执行迁移文件，./yii migrate/create create_blog_table
+
+  Exception 'yii\db\Exception' with message 'SQLSTATE[HY000] [2002] No such file or directory'
+  方法：修改方法：
+  将数据库配置信息，localhost修改为127.0.0.1
+  继续执行迁移文件，执行成功
+  该命令生成的迁移文件位于 advanced\console\migrations 目录，可能你已经注意到了
