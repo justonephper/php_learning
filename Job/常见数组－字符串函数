@@ -1,0 +1,43 @@
+1.string function
+增删改查：
+  strlen
+  implode
+  explode
+  trim
+  ltrim
+  rtrim
+  substr
+  str_replace
+  strtoupper
+  strtolower
+  lcfirst
+  ucfirst
+  ucwords
+  strpos
+  stripos
+  md5
+这些已经足够面试使用了
+
+２.array函数
+思路：增删改查算
+  is_array
+  in_array
+  array_pop
+  array_push
+  array_shift
+  array_unshift
+  array_sum
+  count
+  array_keys
+  array_values
+  array_diff
+  array_slice
+  array_key_exists
+  array_merge
+  array_column
+  array_combine
+  array_unique
+  list
+  array_fliter
+  array_walk
+这些已经够用了
