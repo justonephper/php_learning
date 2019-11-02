@@ -1,0 +1,75 @@
+问题：为什么框架能够自动加载刚添加的控制器和model还有一些，概括起来讲，就是为什么在app目录下的文件都能被自动加载。
+
+步骤１：
+  创建一个崭新的文件夹，blog文件夹，然后创建文件，composer.json文件，内容如下
+  {
+    "require": {
+      "monolog/monolog": "1.0.*"
+    },
+    "autoload": {
+      "psr-4": {
+        "App\\": "app/"
+      }
+    }
+  }
+  创建完成之后，执行composer install,将会安装monolog这个扩展包，并且配置app目录为psr-4自动加载目录
+  然后在app目录创建Controllers目录，并添加一个控制器，IndexController,代码如下
+  <?php
+  namespace App\Controllers;
+  class IndexController{
+    public function echo_string(){
+      echo "yes".PHP_EOL;
+    }
+  }
+  
+  创建入口文件，index.php,目录结构为：blog/index.php,index.php文件内容如下：
+  <?php
+  require_once "vendor/autoload.php";
+  use App\Controllers\IndexController;
+  
+  $con = new IndexController;
+  $con->echo_string();
+  
+  //output:
+  yes
+  
+  到此控制器被自动加载
+  
+步骤２：
+  打开vendor目录，发现存在composer文件夹，这是composer对本项目的配置代码和composer自身装载项目的代码
+  composer自动加载通过class_map,files,prs-4等方式自动加载代码
+  
+步骤３：
+  那么，在控制器使用models模型中的方法可以使用吗？
+  在app下创建一个models文件夹，创建Student类，目录结构为：Blog\Models\Student.php,内容如下：
+  <?php
+  namespace App\Models;
+  class Student {
+    public static function getName(){
+      echo "zhangsan".PHP_EOL;
+    }
+  }
+  
+  在控制器中调用models方法，打开IndexController代码，添加方法：
+  use App\Models\Student;
+  public function getName(){
+    echo Student::getName();
+  }
+  
+  打开入口文件，index.php,目录结构为：Blog/index.php,添加如下代码：
+  $con->getName();
+  
+  执行入口文件：php index.php
+  //output:
+  zhangsan
+  
+步骤４：
+  继续观察，vendor\composer\autoload_classmap.php文件中，空空如也，虽然能够实现了自动加载，但是性能还是不够的，原因是每次自动加载还需要去遍历目录
+  查找显然不符合我们多快好省的原则（composer执行时，优先加载这个文件内容，若找到则省去后面的目录遍历开销）
+  所以，执行：composer dump-autoload -o,
+  再次打开autoload_classmap.php文件，发现已经存在了IndexController,Student的使用路径和实际文件路径的映射
+
+实验结束，over!
+
+
+  
