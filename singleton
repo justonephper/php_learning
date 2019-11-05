@@ -1,0 +1,30 @@
+<?php
+
+class singleton
+{
+    //三私一公
+    //必须先声明一个静态私有属性:用来保存当前类的实例
+    //１.为什么必须是静态的？因为静态成员属于类，并被类所有实例共享
+    //2.为什么时私有的？不允许外部直接访问，仅允许类方法访问
+    //3.为什么初始化为null,因为类内部访问接口需要检测实例的状态，判断是否实例化
+
+    private static $instance;
+    private function __construct(){}
+    private function __clone(){}
+
+    //因为使用静态属性返回类实例，所以只能使用静态方法
+    public static function getInstance(){
+        if(!self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    public function echo_string(){
+        echo "test\n";
+    }
+}
+
+singleton::getInstance()->echo_string();
+
+
