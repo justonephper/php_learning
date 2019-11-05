@@ -14,6 +14,7 @@ function binarySearch($arr, $needle) {
         return true;
       }
     }
+    return false;
 }
 
 $arr = [1,3,4,5,6,2,8,7,9,11,10,13,15,14,12];
