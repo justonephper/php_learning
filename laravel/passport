@@ -1,0 +1,10 @@
+1.在一个新框架中安装，passport可以安装成功，但是在项目中，一定是使用过composer update相关的操作，更新了代码包，导致安装特定版本的代码包，必须升级框架的问题
+
+问题1：
+Installation request for paragonie/random_compat (locked at v9.99.99) -> satisfiable by paragonie/random_compat[v9.99.99].
+
+解决办法
+
+composer require paragonie/random_compat:2.*
+
+composer require laravel/passport ^4.0
