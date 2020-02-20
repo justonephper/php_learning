@@ -1,0 +1,12 @@
+Q:页面报错以后，会在浏览器底部自动自动追加一个报错模板，很是不习惯，想去掉
+
+方法1：
+    在.env中设置 ：app_debug=false，影响范围太广（范围是整个框架）
+    
+方法2：
+    这个信息是由于使用了phpdebugbar这个插件导致的，关闭这个扩展，在 /config/app.php中，providers数据中心去掉  
+    Barryvdh\Debugbar\ServiceProvider::class,
+    'Debugbar' => Barryvdh\Debugbar\Facade::class,
+    刷新页面，报错信息消失
+    
+    
