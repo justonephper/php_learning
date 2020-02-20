@@ -7,6 +7,8 @@ Q:页面报错以后，会在浏览器底部自动自动追加一个报错模板
     这个信息是由于使用了phpdebugbar这个插件导致的，关闭这个扩展，在 /config/app.php中，providers数据中心去掉  
     Barryvdh\Debugbar\ServiceProvider::class,
     'Debugbar' => Barryvdh\Debugbar\Facade::class,
-    刷新页面，报错信息消失
+    刷新页面，报错信息依然存在
+    
+    解决方案：在.env中添加设置： DEBUGBAR_ENABLED=false
     
     
