@@ -1,0 +1,13 @@
+1.描述：
+local.ERROR: method_exists(): The script tried to execute a method or access a property of an incomplete object. Please ensure that the 
+class definition "App\Jobs\SendEmail" of the object you are trying to operate on was loaded _before_ unserialize() gets called or provide
+an autoloader to load the class definition {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 1): 
+method_exists(): The script tried to execute a method or access a property of an incomplete object. Please ensure that the class definition
+\"App\\Jobs\\SendEmail\" of the object you are trying to operate on was loaded _before_ unserialize() gets called or provide an autoloader to
+load the class definition at 
+
+2.第一反应，哦找不到这个类可能是，执行composer dump-autoload -o 还是不行
+
+3.在job中，添加failed重构函数,来记录产生问题的文件，行号，报错信息
+
+4.根据报错行号，发现sendEmail可能在框架底层已经存在了，重名导致了问题，所以将 sendEmail => send_email，问题就解决了
