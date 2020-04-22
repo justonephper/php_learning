@@ -1,0 +1,21 @@
+1.查看本地分支命令：
+  git branch
+2.创建分支：
+  git branch first_branch
+3.切换分支
+  git checkout first_branch
+4.删除分支
+  git branch -d first_branch
+5.创建分支，并切换到新的分支
+  git checkout -b second_branch
+6.将本地分支同步到远程仓库
+  git push origin local_branch:remote_branch
+  local_branch:本地的分支名称，remote_branch:远程的分支名称
+7.查看远程分支列表：
+  git branch -r
+8.查看本地分支和远程分支的关联关系
+  git remote -v
+9.将本地分支和线上分支建立关联：
+  git branch --set-upstream-to=origin/second_branch
+10.取消对master分支的跟踪
+  git branch --unset-upstream master
