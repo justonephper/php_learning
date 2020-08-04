@@ -1,0 +1,12 @@
+1.版本库中清楚忽略文件
+    情况分为2中，分为该文件是否已经在版本库中，git是否已经被追踪
+    
+    1>未追踪，直接添加.gitignore文件即可
+    
+    2>已追踪，则需要清楚本地缓存处理，步骤如下：
+      git rm -r --cached .
+      git add .
+      git commit -m 'update .gitignore'
+      git push -u
+   
+完成！
