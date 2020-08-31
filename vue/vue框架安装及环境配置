@@ -1,0 +1,21 @@
+1.vue采用脚手架形式安装，借助npm安装
+2.npm install vue，发现特别慢，可以使用阿里提供的cnpm工具
+3.安装cnpm:npm install cnpm
+4.查看npm的镜像源和设置镜像源
+  npm config get registry
+  npm config set registry http://registry.npm.taobao.org
+5.安转vue脚手架
+  cnpm install @vue/cli         //实现vue指令
+  cnpm install @vue/cli-init    //另一款vue脚手架工具，生成框架格式稍微不同，属于老版本的目录结构
+6.安装vue-devtools工具，据说调试vue很好用
+    6.1 翻墙太费劲，采用源码编译安装
+    6.2 git clone https://github.com/vuejs/vue-devtools.git     克隆源码
+    6.3 cnpm install                                            安装以依赖包
+    6.4 cnpm run build                                          编译源码
+      6.4.1  肯定是何种moudle不存在，依次是：isexe,webpack-cli,watchpack,error-stack-parser等模块不存在
+      依次执行 cnpm install -g xxx                              备注：-g代表全局安装
+    6.5 执行编译之后，完成
+    6.6 打开谷歌，更多工具》扩展程序》打开开发者模式》加载已解压的扩展程序
+    
+7.编写vue代码，然后使用vue-devtools工具调试代码
+  
