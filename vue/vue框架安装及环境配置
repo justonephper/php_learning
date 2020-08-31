@@ -1,3 +1,4 @@
+框架安装：
 1.vue采用脚手架形式安装，借助npm安装
 2.npm install vue，发现特别慢，可以使用阿里提供的cnpm工具
 3.安装cnpm:npm install cnpm
@@ -5,7 +6,7 @@
   npm config get registry
   npm config set registry http://registry.npm.taobao.org
 5.安转vue脚手架
-  cnpm install @vue/cli         //实现vue指令
+  cnpm install @vue/cli         //vue-cli 脚手架构建工具
   cnpm install @vue/cli-init    //另一款vue脚手架工具，生成框架格式稍微不同，属于老版本的目录结构
 6.安装vue-devtools工具，据说调试vue很好用
     6.1 翻墙太费劲，采用源码编译安装
@@ -18,4 +19,13 @@
     6.6 打开谷歌，更多工具》扩展程序》打开开发者模式》加载已解压的扩展程序
     
 7.编写vue代码，然后使用vue-devtools工具调试代码
-  
+
+
+环境配置：
+1.在node的安装目录下设置NODE_GLOBAL,NODE_CACHE等目录，并通过指令进行设定：
+npm config prefix xxx       设置全局指令工具的位置
+npm config cache xxx        设置缓存位置
+
+环境变量，只要把常用的指令放到Path就好
+
+补充：声明便令   NODE_PATH    设置的NODE_PATH值，在Path中引用时，变量两侧添加%,例如：%NODE_PATH%
