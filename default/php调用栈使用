@@ -1,0 +1,45 @@
+1.问题描述：一个用户可以开多个店铺，用户信息需要借助token存储，当用户切换店铺后，需要刷新token（更新token主要因为用户信息变了），但是发现token切换后，全局开始报错，而且报错信息一致
+
+分析：
+    1.现象一：全局报错，说明问题一定发生的公共方法部分，已经联想到中间件，但是中间件众多，一个一个打印又不方便
+    2.框架采用了接口统一出口，这样就好办了，只要在出口函数哪里，拿到整个请求的调用栈，就能直接定位调用输出函数的位置
+    
+    下面引出今天的重点函数：debug_backtrace（）
+    使用流程：
+      $debug_arr = debug_backtrace();
+      print_r($debug_arr);die;
+      
+      
+    output:
+    array:42 [
+      0 => array:7 [
+        "file" => "E:\www\api.beauty.com\app\Helpers\Admin\AdminResponse.php"
+        "line" => 70
+        "function" => "responseApi"
+        "class" => "App\Http\Middleware\ApiRequestLimit"
+        "object" => ApiRequestLimit {#1076}
+        "type" => "->"
+        "args" => array:2 [
+          0 => false
+          1 => null
+        ]
+      ]
+      1 => array:7 [
+        "file" => "E:\www\api.beauty.com\app\Http\Middleware\ApiRequestLimit.php"
+        "line" => 25
+        "function" => "failed"
+        "class" => "App\Http\Middleware\ApiRequestLimit"
+        "object" => ApiRequestLimit {#1076}
+        "type" => "->"
+        "args" => array:1 [
+          0 => false
+        ]
+      ]
+      ...
+      
+      果然不出所料，就是在中间件调用的输出函数，并且清晰指出函数的文件，行数，甚至调用的方法名以及对象的，太棒啦
+      然后排查业务逻辑代码，轻松加愉快的搞定!
+      
+      
+      
+      
