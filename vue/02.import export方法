@@ -1,0 +1,8 @@
+1.安装框架，使用了两种方式，
+  方式一：
+    vue create my-project
+  方式二：
+    vue init webpack my-project
+    
+  插一句：有点类似于composer一样，composer create-project laravel:5.8 my-project
+  类比：
