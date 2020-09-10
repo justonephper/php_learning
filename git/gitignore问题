@@ -4,9 +4,20 @@
     1>未追踪，直接添加.gitignore文件即可
     
     2>已追踪，则需要清楚本地缓存处理，步骤如下：
-      git rm -r --cached .
-      git add .
-      git commit -m 'update .gitignore'
-      git push -u
+        2.1 如果是对所有文件都取消跟踪的话，就是
+
+            git rm -r --cached . 　　//不删除本地文件
+            git rm -r --f . 　　//删除本地文件
+
+        2.2 对某个文件取消跟踪
+
+            git rm --cached readme1.txt    删除readme1.txt的跟踪，并保留在本地。
+            git rm --f readme1.txt    删除readme1.txt的跟踪，并且删除本地文件。
+
+        然后git commit 即可。但是git status查看状态时还是会列出来
+        
+        2.3 将忽略文件添加到.gitignore文件
+        
+        2.4 执行 git status，这个文件被成功忽略
    
-完成！
+        
