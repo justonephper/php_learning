@@ -28,9 +28,9 @@ echo is_null($c)."\n";      // 1
 
 
 总结：
-empty判空：　存在且非０，非空，则为有效值，其他皆为false,包括未定义
+empty判空：　false,0,0.00,'0','',null,未定义，都是真
 
-isset判断：　存在且非null,则为有效值，其他皆为false
+isset判断：　存在且非null，就是真
 
 is_null判断：　存在且为null,则为true，其他皆为false,未定义会报错
 
