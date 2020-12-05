@@ -1,0 +1,26 @@
+主题：实现海报生成，解决插件接入的问题
+     
+     
+     1. 插件 ibrand/laravel-miniprogram-poster
+        composer require ibrand/laravel-miniprogram-poster
+        注意：直接使用最新版本就可以（目前是3.0），但是文档不是最新的
+        
+        坑1：MiniProgramShareImg::generateShareImage($url);
+            这种用法只适用于2.0版本，3.0版本中根本不能用
+            
+        方案：
+            $obj = App::get("MiniProgramShareImg");
+            $res = $obj->generateShareImage($url);
+        
+        坑2：执行过程中，总是会出现超时
+            HeadlessChromium \ Exception \ OperationTimedOut
+            Operation timed out (1000ms)
+            
+        方案：
+            sendSyncDefaultTimeout 设置成 10 * 1000【10秒】，问题解决
+            
+        思考：ibrand扩展底层借助了chrome-php扩展，我们可以去chrome-php插件中找到答案，网址 https://github.com/chrome-php/headless-chromium-php
+        
+        
+        
+        
