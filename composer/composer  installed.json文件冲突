@@ -1,0 +1,13 @@
+问题：合并代码，出现vendor/composer/installed.json文件格式错误
+
+思考：
+    1. 第一步，先搞清楚installed.json文件的由来
+    
+    通过线上百度，找不到答案，只有composer.json和composer.lock的记录，没有对installed.json的描述
+    
+    2. 解决方案：
+      1. 把vendor/composer/installed.json文件拷贝一份
+      2. 根据composer.lock重新进行安装，猜测会生成一份新的installed.json文件
+      3. 执行 composer install,果然生成一份新的installed.json文件
+      
+      总结：installed.json有点类似于composer安装日志的作用，只是用于记录composer在当前项目中的扩展包安装情况
