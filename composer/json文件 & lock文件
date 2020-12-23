@@ -1,0 +1,14 @@
+1. composer.json文件的作用：记录我们安装了那些扩展包，可以通过composer install安装composer.json中声明的扩展包
+2. composer install执行后，会生成composer.lock文件，如果lock文件已经存在，则进行更新
+3. composer install指令的执行逻辑：先检查lock文件的存在，存在则按照lock中的包版本信息进行安装，不存在则按照composer.json文件要求进行安装，并生成lock文件
+
+3. 删除扩展包
+    composer remove packageName
+    
+    执行完成后，检查composer.json文件发现，插件包消失，但是检查composer.lock文件中，插件包信息依然存在，所以需要更新一下lock文件
+    
+    执行指令：composer update nothing
+    
+    执行完成后，lock文件更新，lock文件中删除的扩展包信息消失
+    
+    
